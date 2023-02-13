@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+
 import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
@@ -10,7 +10,7 @@ const AppRoutes = ({user, setUser}) => {
     <Routes>
       <Route path="/" element={<Login setUser={setUser} />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/profile" element={<Home user={user}/>} />
+      <Route path="/profile" element={<Home user={user} setUser={setUser} />} />
     </Routes>
   );
 };

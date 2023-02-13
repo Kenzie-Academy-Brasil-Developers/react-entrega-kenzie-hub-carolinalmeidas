@@ -3,6 +3,7 @@ import { StyledSection } from "./styled";
 
 const Cards = ({ user }) => {
   const { techs } = user;
+ 
   return (
     <StyledSection >
       <div>

@@ -12,8 +12,9 @@ import Button from "../../components/Buttons/index.jsx";
 import { useState } from "react";
 import { StyledLoading } from "./loadin";
 
-const Login = ({ setUser }) => {
-  localStorage.clear();
+const Login = ({setUser}) => {
+
+  localStorage.clear()
 
   const { register, handleSubmit, reset } = useForm();
 
@@ -30,8 +31,7 @@ const Login = ({ setUser }) => {
 
       localStorage.setItem("@USERID", JSON.stringify(userLogin.data.user.id));
 
-      setUser(userLogin.data.user);
-
+      setUser(userLogin.data.user)
       navigate("/profile");
     } catch (error) {
 
