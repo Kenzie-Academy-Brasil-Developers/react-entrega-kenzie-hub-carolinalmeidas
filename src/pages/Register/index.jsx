@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-import Logo from "../../assets/logo.svg";
 import { StyledRegister } from "./styled";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,7 +10,8 @@ import Input from "../../components/Input";
 import Select from "../../components/Select";
 import Button from "../../components/Buttons/index.jsx";
 import Header from "../../components/Header";
-import { useState } from "react";
+import { useContext } from "react";
+import { UserContext } from "../../providers/UserContext";
 
 const schema = yup
   .object({
@@ -20,7 +19,10 @@ const schema = yup
     email: yup
       .string()
       .required("Campo Obrigatório")
-      .matches(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/, "Deve estar em formato de E-mail"),
+      .matches(
+        /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
+        "Deve estar em formato de E-mail"
+      ),
 
     password: yup
       .string()
@@ -47,7 +49,9 @@ const schema = yup
   .required();
 
 const Register = () => {
-  
+
+  const { returnPage } = useContext(UserContext)
+
   const {
     register,
     handleSubmit,
@@ -61,7 +65,7 @@ const Register = () => {
   const registerUser = async (data) => {
     try {
       const user = await api.post("/users", data);
-      toast.success("Usuário cadastrado com sucesso")
+      toast.success("Usuário cadastrado com sucesso");
       navigate("/");
       return user;
     } catch (error) {
@@ -69,10 +73,10 @@ const Register = () => {
       toast.error("Ops! Algo deu errado");
     }
   };
-  
+
   return (
     <>
-      <Header name="Voltar" />
+      <Header name="Voltar"  out={returnPage}/>
       <StyledRegister>
         <form onSubmit={handleSubmit(registerUser)}>
           <h1>Crie sua conta</h1>
@@ -126,7 +130,7 @@ const Register = () => {
             register={register}
           />
           <Select register={register} error={errors.course_module?.message} />
-          
+
           <Button name="Cadastrar" />
         </form>
       </StyledRegister>

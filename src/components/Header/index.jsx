@@ -1,13 +1,11 @@
-
-import { Link } from "react-router-dom";
 import Logo from "../../assets/logo.svg";
 import { StyledHeader } from "./styled";
 
-const Header = ({ name }) => {
+const Header = ({name, out}) => {
   return (
     <StyledHeader>
       <img src={Logo} alt="Logo" />
-      <Link to="/">{name}</Link>
+      <button onClick={() => out()}>{name}</button>
     </StyledHeader>
   );
 };

@@ -7,7 +7,7 @@ export const StyledHeader = styled.header`
   justify-content: space-between;
   padding: 10px 10px;
 
-  a {
+  button {
     width: 80px;
     height: 30px;
     background: var(--color-grey-3);
@@ -20,6 +20,7 @@ export const StyledHeader = styled.header`
     text-decoration: none;
     text-align: center;
     color: var(--color-grey-0);
+    border: none;
 
     padding: 4px;
 

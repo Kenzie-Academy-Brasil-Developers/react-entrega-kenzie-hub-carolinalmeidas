@@ -1,34 +1,53 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import Cards from "../../components/Cards";
+import TecForm from "../../components/Forms/FormCreate";
+import EditForm from "../../components/Forms/FormEdit";
+
 import Header from "../../components/Header";
 import AboutUser from "../../components/User";
+import { TecContext } from "../../providers/TecContext";
+import { UserContext } from "../../providers/UserContext";
 import { api } from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
-const Home = ({ user, setUser }) => {
+const Home = () => {
+  const { user, setUser, logout, setTechs } = useContext(UserContext);
+  const {modal, modalEdit} = useContext(TecContext);
+  const navigate = useNavigate()
+
   useEffect(() => {
-    const idUser = JSON.parse(localStorage.getItem("@USERID"));
-
-    async function AboutUser(id) {
-      try {
-        const userA = await api.get(`/users/${id}`);
-        setUser(userA.data);
-      } catch (error) {
-        console.log(error);
+    const token = JSON.parse(localStorage.getItem("@TOKEN"));
+    if(token){
+      async function AboutUser(token) {
+        try {
+          const userA = await api.get("/profile", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setUser(userA.data);
+          setTechs(userA.data.techs)
+        } catch (error) {
+          console.log(error);
+        }
       }
+      AboutUser(token);
+    }else{
+      navigate("/")
     }
-    AboutUser(idUser);
+
   }, []);
 
   return (
     <>
-      <Header name="Sair" />
-      {user ? (
+      {user && (
         <>
-          <AboutUser user={user} />
-          <Cards user={user} />
+          <Header name="Sair" out={logout} />
+          <AboutUser />
+          <Cards />
+          {modal ? <TecForm /> : null}
+          {modalEdit ? <EditForm/> : null}
         </>
-      ) : (
-        console.log("não")
       )}
     </>
   );

@@ -1,7 +1,11 @@
+import { useContext } from "react";
+import { UserContext } from "../../providers/UserContext";
 import { User } from "./styled";
 
-const AboutUser = ({ user }) => {
-  const { name, course_module } = user;
+const AboutUser = () => {
+  const {user} = useContext(UserContext);
+  const {name, course_module } = user;
+ 
   return (
     <User>
       <h1>Olá, {name}</h1>

@@ -1,54 +1,32 @@
-import { api } from "../../services/api";
+
 import { StyledLogin } from "./styled";
 import Logo from "../../assets/logo.svg";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
-import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Input from "../../components/Input";
 import Button from "../../components/Buttons/index.jsx";
-import { useState } from "react";
+import { useContext} from "react";
 import { StyledLoading } from "./loadin";
+import { UserContext } from "../../providers/UserContext";
 
-const Login = ({setUser}) => {
+const Login = () => {
+  const { loading, loginData} = useContext(UserContext)
 
-  localStorage.clear()
+  const { register, handleSubmit} = useForm();
 
-  const { register, handleSubmit, reset } = useForm();
-
-  const [loading, setLoading] = useState(true);
-
-  const navigate = useNavigate();
-
-  const loginData = async (data) => {
-    setLoading(false);
-    try {
-      const userLogin = await api.post("/sessions", data);
-
-      localStorage.setItem("@TOKEN", JSON.stringify(userLogin.data.token));
-
-      localStorage.setItem("@USERID", JSON.stringify(userLogin.data.user.id));
-
-      setUser(userLogin.data.user)
-      navigate("/profile");
-    } catch (error) {
-
-      toast.error("Email ou senha inválidos");
-      setLoading(true);
-      reset()
-    } finally {
-      setLoading(true);
-    }
-  };
+  const submit = (data) => {
+    loginData(data)
+  }
 
   return (
     <>
         <StyledLogin>
           <img src={Logo} alt="Logo" />
+          
           <div className="form">
-            <form onSubmit={handleSubmit(loginData)}>
+            <form onSubmit={handleSubmit(submit)}>
               <h1>Login</h1>
 
               <Input
