@@ -1,24 +1,31 @@
 
 import { StyledLogin } from "./styled";
 import Logo from "../../assets/logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Input from "../../components/Input";
 import Button from "../../components/Buttons/index.jsx";
-import { useContext} from "react";
+import { useContext, useEffect} from "react";
 import { StyledLoading } from "./loadin";
 import { UserContext } from "../../providers/UserContext";
 
+
 const Login = () => {
   const { loading, loginData} = useContext(UserContext)
-
+  const navigate = useNavigate()
   const { register, handleSubmit} = useForm();
 
   const submit = (data) => {
     loginData(data)
   }
+  useEffect(() => {
+    const token = JSON.parse(localStorage.getItem("@TOKEN"));
+    if(token){
+      navigate("/profile")
+    }
+  }, [])
 
   return (
     <>

@@ -29,7 +29,7 @@ const TecForm = () => {
             />
 
             <select id="status" {...register("status")}>
-              <option disabled selected hidden>
+              <option disabled hidden>
                 Selecione um status
               </option>
               <option value="Iniciante">Iniciante</option>

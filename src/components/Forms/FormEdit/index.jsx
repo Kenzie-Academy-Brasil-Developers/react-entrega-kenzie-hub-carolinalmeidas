@@ -32,7 +32,7 @@ const EditForm = () => {
 
           <label htmlFor="status">Status</label>
           <select id="status" {...register("status")}>
-            <option disabled selected hidden>
+            <option disabled hidden>
               {status}
             </option>
             <option value="Iniciante">Iniciante</option>

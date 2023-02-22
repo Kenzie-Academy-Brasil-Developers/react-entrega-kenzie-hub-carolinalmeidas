@@ -10,7 +10,7 @@ import Input from "../../components/Input";
 import Select from "../../components/Select";
 import Button from "../../components/Buttons/index.jsx";
 import Header from "../../components/Header";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../../providers/UserContext";
 
 const schema = yup
@@ -73,6 +73,12 @@ const Register = () => {
       toast.error("Ops! Algo deu errado");
     }
   };
+  useEffect(() => {
+    const token = JSON.parse(localStorage.getItem("@TOKEN"));
+    if(token){
+      navigate("/profile")
+    }
+  }, [])
 
   return (
     <>

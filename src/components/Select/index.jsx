@@ -5,7 +5,7 @@ const Select = ({ register, error }) => {
     <StyledSelect>
       <label htmlFor="course_module">Escolha o Módulo</label>
       <select {...register("course_module")}>
-        <option disabled selected hidden>
+        <option disabled  hidden>
           Primeiro módulo(Introdução ao Frontend)
         </option>
         <option value="Primeiro módulo(Introdução ao Frontend)">
