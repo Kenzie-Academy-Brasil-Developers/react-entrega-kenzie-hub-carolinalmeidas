@@ -18,18 +18,15 @@ export const UserProvider = ({children}) => {
         setLoading(false);
         try {
           const userLogin = await api.post("/sessions", data);
-    
+          setUser(userLogin.data.user);
+          setTechs(userLogin.data.user.techs);
           localStorage.setItem("@TOKEN", JSON.stringify(userLogin.data.token));
-    
           localStorage.setItem("@USERID", JSON.stringify(userLogin.data.user.id));
-    
-          setUser(userLogin.data.user)
-          setTechs(userLogin.data.user.techs)
           navigate("/profile");
         } catch (error) {
           toast.error("Email ou senha inválidos");
           setLoading(true);
-          reset()
+          reset();
         } finally {
           setLoading(true);
         }
@@ -38,13 +35,13 @@ export const UserProvider = ({children}) => {
 
     const logout = () => {
         setUser(null)
-        localStorage.removeItem("@TOKEN")
-        localStorage.removeItem("@USERID")
-        navigate("/")
+        localStorage.removeItem("@TOKEN");
+        localStorage.removeItem("@USERID");
+        navigate("/");
     }
 
     const returnPage = () => {
-      navigate("/")
+      navigate("/");
     }
 
     return(

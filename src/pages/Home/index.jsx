@@ -8,47 +8,54 @@ import { TecContext } from "../../providers/TecContext";
 import { UserContext } from "../../providers/UserContext";
 import { api } from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import { StyledLoading2 } from "./loading";
 
 const Home = () => {
   const { user, setUser, logout, setTechs } = useContext(UserContext);
-  const {modal, modalEdit} = useContext(TecContext);
-  const navigate = useNavigate()
+  const { modal, modalEdit } = useContext(TecContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("@TOKEN"));
-    if(token){
-      async function AboutUser(token) {
-        try {
-          const userA = await api.get("/profile", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          setUser(userA.data);
-          setTechs(userA.data.techs)
-        } catch (error) {
-          console.log(error);
+    if (!token) {
+      navigate("/");
+    } else {
+      if (token) {
+        async function AboutUser() {
+          try {
+            const userA = await api.get("/profile", {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+            setUser(userA.data);
+            setTechs(userA.data.techs);
+          } catch (error) {
+            console.log(error);
+          }
         }
+        AboutUser();
+      } else {
+        navigate("/");
       }
-      AboutUser(token);
-      console.log("ok")
-    }else{
-      navigate("/")
     }
-    
-
   }, []);
+
 
   return (
     <>
-      {user && (
+      {user ? (
         <>
           <Header name="Sair" out={logout} />
           <AboutUser />
           <Cards />
           {modal ? <TecForm /> : null}
-          {modalEdit ? <EditForm/> : null}
+          {modalEdit ? <EditForm /> : null}
         </>
+      ) : (
+        <StyledLoading2>
+          <span className="loader"></span>
+        </StyledLoading2>
       )}
     </>
   );

@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const StyledLoading = styled.div`
 .loader {
-
     width: 48px;
     height: 48px;
     border: 5px solid var(--color-primary);
