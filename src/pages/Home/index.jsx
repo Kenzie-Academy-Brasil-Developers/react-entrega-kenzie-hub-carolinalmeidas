@@ -2,7 +2,6 @@ import { useContext, useEffect } from "react";
 import Cards from "../../components/Cards";
 import TecForm from "../../components/Forms/FormCreate";
 import EditForm from "../../components/Forms/FormEdit";
-
 import Header from "../../components/Header";
 import AboutUser from "../../components/User";
 import { TecContext } from "../../providers/TecContext";
@@ -32,9 +31,11 @@ const Home = () => {
         }
       }
       AboutUser(token);
+      console.log("ok")
     }else{
       navigate("/")
     }
+    
 
   }, []);
 

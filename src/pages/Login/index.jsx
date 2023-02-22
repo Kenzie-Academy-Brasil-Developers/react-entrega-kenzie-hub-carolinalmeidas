@@ -45,7 +45,7 @@ const Login = () => {
               {
                 loading ? <Button name="Entrar" /> :         
                 <StyledLoading>
-                <span class="loader"></span>
+                <span className="loader"></span>
                 </StyledLoading>
               }
               
